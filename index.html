@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة عرض إجازات عمال انتاج البلاستيك</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #d32f2f;
+            --primary-red-light: #ff6659;
+            --primary-red-dark: #9a0007;
+            --green: #4caf50;
+            --yellow: #ff9800;
+            --red: #f44336;
+            --gray: #9e9e9e;
+            --light-gray: #f5f5f5;
+            --dark-gray: #616161;
+            --white: #ffffff;
+            --black: #212121;
+            --blue: #2196f3;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 12px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
+            color: var(--black);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
+            color: var(--white);
+            padding: 25px 30px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .logo:hover i {
+            transform: rotate(15deg);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .current-date, .tomorrow-date {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .current-date i, .tomorrow-date i {
+            color: var(--white);
+            font-size: 1.3rem;
+        }
+
+        #current-date, #tomorrow-date {
+            font-weight: 600;
+            color: #ffeb3b;
+            font-size: 1.2rem;
+        }
+
+        /* Update Section */
+        .update-section {
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-light) 100%);
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(211, 47, 47, 0.4);
+        }
+
+        .refresh-btn:active {
+            transform: translateY(0);
+        }
+
+        .refresh-btn i {
+            font-size: 1.2rem;
+            animation: spin 2s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .refresh-btn:hover i {
+            animation-play-state: running;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .last-update {
+            font-size: 1rem;
+            color: var(--dark-gray);
+            background: var(--light-gray);
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .last-update::before {
+            content: '🕐';
+            font-size: 1.1rem;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 5px solid var(--primary-red);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary-red);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .card.green::before {
+            background: var(--green);
+        }
+
+        .card.yellow::before {
+            background: var(--yellow);
+        }
+
+        .card.red::before {
+            background: var(--red);
+        }
+
+        .card.gray::before {
+            background: var(--gray);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-title i {
+            font-size: 1.8rem;
+            color: var(--primary-red);
+            background: var(--light-gray);
+            padding: 12px;
+            border-radius: 50%;
+        }
+
+        .green .card-title i { color: var(--green); }
+        .yellow .card-title i { color: var(--yellow); }
+        .red .card-title i { color: var(--red); }
+        .gray .card-title i { color: var(--gray); }
+
+        .card-title h2 {
+            font-size: 1.5rem;
+            color: var(--black);
+            font-weight: 700;
+        }
+
+        .date-info {
+            text-align: left;
+        }
+
+        .date-info .date {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .date-info .day {
+            font-size: 1rem;
+            color: var(--primary-red);
+            font-weight: 500;
+            background: rgba(211, 47, 47, 0.1);
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .card-content {
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .workers-list {
+            margin-bottom: 20px;
+        }
+
+        .workers-list h3 {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .workers-list h3 i {
+            color: var(--primary-red);
+        }
+
+        .workers-container {
+            min-height: 80px;
+            max-height: 150px;
+            overflow-y: auto;
+            padding: 15px;
+            background: var(--light-gray);
+            border-radius: 10px;
+            border: 2px dashed #ddd;
+        }
+
+        .worker {
+            background: var(--white);
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            border-right: 4px solid var(--primary-red);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .worker:last-child {
+            margin-bottom: 0;
+        }
+
+        .worker i {
+            color: var(--primary-red);
+        }
+
+        .no-workers {
+            text-align: center;
+            color: var(--gray);
+            font-style: italic;
+            padding: 20px;
+            background: rgba(158, 158, 158, 0.1);
+            border-radius: 8px;
+            border: 1px dashed var(--gray);
+        }
+
+        .no-workers i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--gray);
+        }
+
+        .status-info {
+            background: var(--light-gray);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .status-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .status-count {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+
+        .status-count.available {
+            color: var(--green);
+        }
+
+        .status-count.warning {
+            color: var(--yellow);
+        }
+
+        .status-count.full {
+            color: var(--red);
+        }
+
+        .status-icon {
+            font-size: 1.8rem;
+            margin-left: 10px;
+        }
+
+        /* Monthly View Button */
+        .monthly-view-btn {
+            background: linear-gradient(135deg, var(--blue) 0%, #1976d2 100%);
+            color: var(--white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition);
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .monthly-view-btn:hover {
+            background: linear-gradient(135deg, #1976d2 0%, #0d47a1 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+        }
+
+        .monthly-view-btn i {
+            font-size: 1.1rem;
+        }
+
+        /* Monthly View Modal - FIXED FOR MOBILE */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 10000;
+            padding: 10px;
+            backdrop-filter: blur(5px);
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 100%;
+            max-height: 95vh;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: modalFadeIn 0.3s ease-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
+            color: var(--white);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .modal-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .close-modal {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: var(--white);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 0;
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: calc(95vh - 120px);
+        }
+
+        /* FIXED: Better table design without sticky date cell */
+        .monthly-table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .monthly-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        .monthly-table thead {
+            background: var(--light-gray);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .monthly-table th {
+            padding: 12px 10px;
+            text-align: center;
+            font-weight: 700;
+            color: var(--primary-red);
+            border-bottom: 2px solid var(--primary-red);
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .monthly-table td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+            font-size: 0.9rem;
+        }
+
+        .monthly-table tbody tr:hover {
+            background: rgba(33, 150, 243, 0.05);
+        }
+
+        /* REMOVED: Date cell sticky positioning */
+        .monthly-table .date-cell {
+            font-weight: 600;
+            color: var(--dark-gray);
+            background: rgba(245, 245, 245, 0.5);
+            min-width: 110px;
+            /* REMOVED: position: sticky; right: 0; z-index: 5; */
+            /* REMOVED: border-right: 2px solid #ddd; */
+            /* REMOVED: box-shadow: -2px 0 5px rgba(0,0,0,0.05); */
+        }
+
+        .leave-names {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: flex-start;
+        }
+
+        .leave-name {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: var(--green);
+            font-size: 0.85rem;
+            display: inline-block;
+            margin: 1px;
+            word-break: break-word;
+            max-width: 120px;
+            text-align: right;
+        }
+
+        .empty-cell {
+            color: var(--gray);
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+
+        .today-row {
+            background: rgba(255, 235, 59, 0.15) !important;
+        }
+
+        .tomorrow-row {
+            background: rgba(33, 150, 243, 0.08) !important;
+        }
+
+        /* NEW: Add border-left instead of right for today/tomorrow */
+        .today-row .date-cell {
+            border-right: 4px solid #ff9800;
+        }
+
+        .tomorrow-row .date-cell {
+            border-right: 4px solid var(--blue);
+        }
+
+        .monthly-table .day-name {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 3px;
+            display: block;
+        }
+
+        /* Status Filter */
+        .status-filter {
+            padding: 12px 15px;
+            background: var(--light-gray);
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .filter-btn {
+            padding: 8px 14px;
+            border: 2px solid var(--primary-red);
+            background: var(--white);
+            color: var(--primary-red);
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .filter-btn:hover {
+            background: rgba(211, 47, 47, 0.1);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-red);
+            color: var(--white);
+        }
+
+        /* Legend */
+        .legend {
+            background: var(--white);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .legend h3 {
+            color: var(--primary-red);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--light-gray);
+            padding: 10px 15px;
+            border-radius: 20px;
+        }
+
+        .color-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .color-box.green { background: var(--green); }
+        .color-box.yellow { background: var(--yellow); }
+        .color-box.red { background: var(--red); }
+        .color-box.gray { background: var(--gray); }
+        .color-box.blue { background: var(--blue); }
+        .color-box.orange { background: #ff9800; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, var(--primary-red-dark) 0%, var(--primary-red) 100%);
+            color: var(--white);
+            border-radius: var(--border-radius);
+            margin-top: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .footer .note {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-style: italic;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            min-width: 300px;
+        }
+
+        .loading-overlay.active .loading-content {
+            transform: translateY(0);
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--light-gray);
+            border-top: 5px solid var(--primary-red);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-content p {
+            font-size: 1.2rem;
+            color: var(--primary-red);
+            font-weight: 600;
+        }
+
+        /* NEW: Month Navigation */
+        .month-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: var(--light-gray);
+            border-bottom: 1px solid #ddd;
+        }
+
+        .month-nav-btn {
+            background: var(--primary-red);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+
+        .current-month {
+            font-weight: bold;
+            color: var(--primary-red);
+            font-size: 1.1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .header-info {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .modal-content {
+                margin: 5px;
+                max-height: 98vh;
+            }
+            
+            .monthly-table th,
+            .monthly-table td {
+                padding: 8px 6px;
+                font-size: 0.85rem;
+            }
+            
+            .leave-name {
+                font-size: 0.8rem;
+                padding: 3px 6px;
+                max-width: 100px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .logo h1 {
+                font-size: 1.3rem;
+            }
+            
+            .current-date, .tomorrow-date {
+                font-size: 1rem;
+            }
+            
+            .update-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .refresh-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .legend-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-overlay {
+                padding: 5px;
+                align-items: flex-start;
+            }
+            
+            .modal-content {
+                width: 100%;
+                max-height: 98vh;
+                border-radius: 10px;
+            }
+            
+            .modal-header {
+                padding: 12px 15px;
+            }
+            
+            .modal-header h2 {
+                font-size: 1.1rem;
+            }
+            
+            .monthly-table {
+                min-width: 600px;
+            }
+            
+            .monthly-table th {
+                padding: 10px 6px;
+                font-size: 0.85rem;
+            }
+            
+            .monthly-table td {
+                padding: 8px 5px;
+                font-size: 0.8rem;
+            }
+            
+            .leave-name {
+                font-size: 0.75rem;
+                padding: 2px 5px;
+                max-width: 90px;
+            }
+            
+            .date-cell {
+                min-width: 100px;
+                font-size: 0.85rem;
+            }
+            
+            .day-name {
+                font-size: 0.75rem;
+            }
+            
+            .status-filter {
+                padding: 10px;
+            }
+            
+            .filter-btn {
+                padding: 6px 10px;
+                font-size: 0.85rem;
+                min-width: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 15px;
+            }
+            
+            .logo {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo i {
+                margin-bottom: 10px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .card-title h2 {
+                font-size: 1.3rem;
+            }
+            
+            .refresh-btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .monthly-view-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .modal-header h2 {
+                font-size: 1rem;
+            }
+            
+            .close-modal {
+                width: 30px;
+                height: 30px;
+                font-size: 1rem;
+            }
+            
+            .monthly-table {
+                min-width: 650px;
+            }
+            
+            .monthly-table th {
+                padding: 8px 4px;
+                font-size: 0.8rem;
+            }
+            
+            .monthly-table td {
+                padding: 6px 4px;
+                font-size: 0.75rem;
+            }
+            
+            .leave-name {
+                font-size: 0.7rem;
+                padding: 2px 4px;
+                max-width: 80px;
+            }
+            
+            .status-filter {
+                flex-direction: row;
+                justify-content: center;
+            }
+            
+            .filter-btn {
+                padding: 5px 8px;
+                font-size: 0.8rem;
+                min-width: 70px;
+            }
+        }
+
+        /* Animation for data update */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-red);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-red-dark);
+        }
+
+        .workers-container::-webkit-scrollbar,
+        .modal-body::-webkit-scrollbar {
+            width: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h1>لوحة عرض إجازات عمال انتاج البلاستيك</h1>
+                </div>
+                <div class="header-info">
+                    <div class="current-date">
+                        <i class="fas fa-clock"></i>
+                        <span>تاريخ اليوم: <span id="current-date"></span></span>
+                    </div>
+                    <div class="tomorrow-date">
+                        <i class="fas fa-calendar-day"></i>
+                        <span>بيانات يوم الغد: <span id="tomorrow-date"></span></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Update Button -->
+        <div class="update-section">
+            <button id="refresh-btn" class="refresh-btn">
+                <i class="fas fa-sync-alt"></i>
+                تحديث البيانات الآن
+            </button>
+            <div class="last-update" id="last-update">
+                آخر تحديث: --:--:--
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid" id="dashboard-grid">
+            <!-- Cards will be loaded dynamically -->
+        </div>
+
+        <!-- Status Legend -->
+        <div class="legend">
+            <h3><i class="fas fa-info-circle"></i> شرح رموز الحالة:</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="color-box green"></div>
+                    <span>إجازات متاحة</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box yellow"></div>
+                    <span>آخر إجازة متبقية</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box red"></div>
+                    <span>الإجازات مكتملة</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box gray"></div>
+                    <span>لا توجد بيانات</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box blue"></div>
+                    <span>يوم الغد (في عرض الشهر)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box orange"></div>
+                    <span>اليوم الحالي (في عرض الشهر)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2026 نظام عرض إجازات عمال الإنتاج - يجب التنسيق مع المشرف قبل طلب الإجازة بوقت كاف - اي تغيير في موعد الاجازة يجب ابلاغ المشرف فورا - لكل شخص الحق في اخذ اجازة يومين فقط في الشهر - الغياب بدون إذن مسبق يؤدي لخصم ٢٠% من الحوافز الشهرية لكل يوم- لا يسمح بالتعديل</p>
+            <p class="note">جميع التحديثات تتم من خلال ملفات Google Sheets فقط</p>
+        </footer>
+    </div>
+
+    <!-- Monthly View Modal -->
+    <div class="modal-overlay" id="monthly-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-alt"></i> <span id="modal-title">عرض إجازات الشهر</span></h2>
+                <button class="close-modal" id="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Month Navigation -->
+            <div class="month-navigation">
+                <button class="month-nav-btn" id="prev-month">
+                    <i class="fas fa-chevron-right"></i>
+                    الشهر السابق
+                </button>
+                <span class="current-month" id="current-month-display"></span>
+                <button class="month-nav-btn" id="next-month">
+                    الشهر التالي
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            
+            <div class="status-filter" id="status-filter">
+                <button class="filter-btn active" data-status="all">كل الإجازات</button>
+                <button class="filter-btn" data-status="available">أيام بها إجازات</button>
+                <button class="filter-btn" data-status="empty">أيام بدون إجازات</button>
+            </div>
+            <div class="modal-body">
+                <div class="monthly-table-container">
+                    <table class="monthly-table" id="monthly-table">
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>إجازة 1</th>
+                                <th>إجازة 2</th>
+                               <th>إجازة 3</th>
+                               <th>إجازة 4</th>
+                               <th>إجازة 5</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthly-table-body">
+                            <!-- Monthly data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>جاري تحميل بيانات الإجازات...</p>
+        </div>
+    </div>
+
+    <script>
+        // Google Sheets configuration
+        const SHEETS_CONFIG = [
+            {
+                id: 'Day Shift',
+                name: 'الوردية النهارية',
+                maxLeaves: 5,
+                sheetId: '1PotRroCGTAfYkq7igrGgvlPN944fb9gN',
+                gid: '0',
+                icon: 'fas fa-industry'
+            },
+            {
+                id: 'Night Shift',
+                name: 'الوردية اليلية',
+                maxLeaves: 5,
+                sheetId: '1RuJnrGYiOtg8YkbUy4m_JgjctVvRnWVA',
+                gid: '0',
+                icon: 'fas fa-industry'
+            },
+            
+        ];
+
+        // Global variables
+        let allMonthlyData = {};
+        let currentLineData = null;
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        // Date utilities
+        function getTomorrowDate() {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
+            return tomorrow;
+        }
+
+        function formatDate(date, format = 'YYYY/MM/DD') {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            
+            if (format === 'YYYY/MM/DD') {
+                return `${year}/${month}/${day}`;
+            } else if (format === 'DD-MM-YYYY') {
+                return `${day}-${month}-${year}`;
+            } else if (format === 'YYYY-MM-DD') {
+                return `${year}-${month}-${day}`;
+            }
+            return date;
+        }
+
+        function parseDate(dateStr) {
+            if (!dateStr) return null;
+            
+            // Try different date formats
+            const formats = [
+                { regex: /(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})/, parser: (y, m, d) => new Date(y, m-1, d) },
+                { regex: /(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/, parser: (d, m, y) => new Date(y, m-1, d) }
+            ];
+            
+            for (const format of formats) {
+                const match = dateStr.match(format.regex);
+                if (match) {
+                    return format.parser(...match.slice(1));
+                }
+            }
+            return null;
+        }
+
+        function getArabicDayName(date) {
+            const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+            return days[date.getDay()];
+        }
+
+        function getArabicMonthName(monthIndex) {
+            const months = [
+                'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+                'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+            ];
+            return months[monthIndex];
+        }
+
+        function getMonthDates(year, month) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            
+            const dates = [];
+            let current = new Date(firstDay);
+            
+            while (current <= lastDay) {
+                dates.push(new Date(current));
+                current.setDate(current.getDate() + 1);
+            }
+            
+            return dates;
+        }
+
+        // Google Sheets API functions
+        async function fetchGoogleSheetData(sheetId, gid = '0') {
+            try {
+                const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=${gid}`;
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const csvText = await response.text();
+                return parseCSV(csvText);
+            } catch (error) {
+                console.error(`Error fetching sheet ${sheetId}:`, error);
+                return null;
+            }
+        }
+
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+            
+            if (lines.length === 0) return [];
+            
+            // Parse header
+            const headers = lines[0].split(',').map(header => 
+                header.replace(/^"|"$/g, '').trim()
+            );
+            
+            // Parse data rows
+            const data = [];
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].match(/(?:[^,"]+|"[^"]*")+/g) || [];
+                const row = {};
+                
+                headers.forEach((header, index) => {
+                    let value = values[index] || '';
+                    value = value.replace(/^"|"$/g, '').trim();
+                    row[header] = value;
+                });
+                
+                data.push(row);
+            }
+            
+            return data;
+        }
+
+        // Process data for a specific line
+        function processLineData(data, lineConfig, tomorrowDate) {
+            const tomorrowStr = formatDate(tomorrowDate, 'YYYY/MM/DD');
+            
+            // Find tomorrow's row
+            const tomorrowRow = data.find(row => {
+                const dateStr = row['اليوم'] || row['Date'] || '';
+                const parsedDate = parseDate(dateStr);
+                if (!parsedDate) return false;
+                
+                const rowDateStr = formatDate(parsedDate, 'YYYY/MM/DD');
+                return rowDateStr === tomorrowStr;
+            });
+            
+            if (!tomorrowRow) {
+                return {
+                    workers: [],
+                    used: 0,
+                    remaining: lineConfig.maxLeaves,
+                    hasData: false,
+                    allData: data
+                };
+            }
+            
+            // Extract worker names from all leave columns
+            const workers = [];
+            const usedLeaves = new Set();
+            
+            Object.keys(tomorrowRow).forEach(key => {
+                if (key.includes('اجازة') || key.includes('Leave')) {
+                    const workerName = tomorrowRow[key];
+                    if (workerName && workerName.trim() !== '') {
+                        const cleanedName = workerName.trim();
+                        if (!usedLeaves.has(cleanedName)) {
+                            usedLeaves.add(cleanedName);
+                            workers.push(cleanedName);
+                        }
+                    }
+                }
+            });
+            
+            return {
+                workers,
+                used: workers.length,
+                remaining: Math.max(0, lineConfig.maxLeaves - workers.length),
+                hasData: true,
+                allData: data
+            };
+        }
+
+        // Process monthly data for a specific line
+        function processMonthlyData(data, lineConfig, year, month) {
+            const monthlyData = [];
+            const today = new Date();
+            const tomorrow = getTomorrowDate();
+            
+            // Get month dates
+            const monthDates = getMonthDates(year, month);
+            
+            // Create a map of date strings to data rows
+            const dataMap = {};
+            data.forEach(row => {
+                const dateStr = row['اليوم'] || row['Date'] || '';
+                if (dateStr) {
+                    const parsedDate = parseDate(dateStr);
+                    if (parsedDate) {
+                        const key = formatDate(parsedDate, 'YYYY-MM-DD');
+                        dataMap[key] = row;
+                    }
+                }
+            });
+            
+            // Process each date in the month
+            monthDates.forEach(date => {
+                const dateKey = formatDate(date, 'YYYY-MM-DD');
+                const dateStr = formatDate(date, 'YYYY/MM/DD');
+                
+                let row = dataMap[dateKey];
+                
+                const dayData = {
+                    date: new Date(date),
+                    dateStr: dateStr,
+                    arabicDay: getArabicDayName(date),
+                    leaves: [],
+                    isToday: date.toDateString() === today.toDateString(),
+                    isTomorrow: date.toDateString() === tomorrow.toDateString()
+                };
+                
+                if (row) {
+                    // Extract worker names from leave columns only (max 3 leaves)
+                    for (let i = 1; i <= 3; i++) {
+                        const leaveKey = `اجازة ${i}`;
+                        if (row[leaveKey] && row[leaveKey].trim() !== '') {
+                            dayData.leaves.push(row[leaveKey].trim());
+                        }
+                    }
+                }
+                
+                monthlyData.push(dayData);
+            });
+            
+            return monthlyData;
+        }
+
+        // UI Functions
+        function updateDateTime() {
+            const today = new Date();
+            const tomorrow = getTomorrowDate();
+            
+            // Format dates in Arabic
+            const todayFormatted = today.toLocaleDateString('ar-EG', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            const tomorrowFormatted = tomorrow.toLocaleDateString('ar-EG', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            const tomorrowDayName = getArabicDayName(tomorrow);
+            
+            document.getElementById('current-date').textContent = todayFormatted;
+            document.getElementById('tomorrow-date').textContent = `${tomorrowFormatted} (${tomorrowDayName}) - غدًا`;
+        }
+
+        function updateLastUpdateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-EG', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            document.getElementById('last-update').textContent = `آخر تحديث: ${timeString}`;
+        }
+
+        function createCard(lineConfig, data) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.dataset.lineId = lineConfig.id;
+            
+            // Determine status color
+            let statusClass = 'green';
+            let statusText = '';
+            let statusIcon = 'fas fa-check-circle';
+            
+            if (!data.hasData) {
+                statusClass = 'gray';
+                statusText = 'لا توجد بيانات';
+                statusIcon = 'fas fa-question-circle';
+            } else if (data.remaining === 0) {
+                statusClass = 'red';
+                statusText = 'الإجازات مكتملة';
+                statusIcon = 'fas fa-times-circle';
+            } else if (data.remaining === 1) {
+                statusClass = 'yellow';
+                statusText = 'آخر إجازة متبقية';
+                statusIcon = 'fas fa-exclamation-circle';
+            } else {
+                statusClass = 'green';
+                statusText = 'متبقي إجازات';
+                statusIcon = 'fas fa-check-circle';
+            }
+            
+            card.classList.add(statusClass);
+            
+            const tomorrow = getTomorrowDate();
+            const arabicDay = getArabicDayName(tomorrow);
+            
+            card.innerHTML = `
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="${lineConfig.icon}"></i>
+                        <h2>${lineConfig.name}</h2>
+                    </div>
+                    <div class="date-info">
+                        <div class="date">${formatDate(tomorrow, 'YYYY/MM/DD')}</div>
+                        <div class="day">${arabicDay} - غدًا</div>
+                    </div>
+                </div>
+                
+                <div class="card-content">
+                    <div class="workers-list">
+                        <h3><i class="fas fa-users"></i> العمال الحاصلين على إجازة</h3>
+                        <div class="workers-container">
+                            ${data.workers.length > 0 ? 
+                                data.workers.map(worker => `
+                                    <div class="worker">
+                                        <i class="fas fa-user"></i>
+                                        <span>${worker}</span>
+                                    </div>
+                                `).join('') : 
+                                `<div class="no-workers">
+                                    <i class="fas fa-user-slash"></i>
+                                    <p>لا يوجد عمال في إجازة</p>
+                                </div>`
+                            }
+                        </div>
+                    </div>
+                    
+                    <div class="status-info">
+                        <div class="status-text">
+                            <i class="${statusIcon}"></i>
+                            <span>${statusText}</span>
+                        </div>
+                        ${data.hasData ? `
+                            <div class="status-count ${statusClass === 'green' ? 'available' : statusClass === 'yellow' ? 'warning' : 'full'}">
+                                ${data.remaining}
+                            </div>
+                            <div class="status-details">
+                                <p>الحد الأقصى: <strong>${lineConfig.maxLeaves}</strong></p>
+                                <p>المستخدم: <strong>${data.used}</strong></p>
+                                <p>المتبقي: <strong>${data.remaining}</strong></p>
+                            </div>
+                        ` : `
+                            <div class="status-count" style="color: var(--gray);">--</div>
+                            <div class="status-details">
+                                <p>لا توجد بيانات لهذا اليوم</p>
+                            </div>
+                        `}
+                    </div>
+                </div>
+                
+                <button class="monthly-view-btn" data-line-id="${lineConfig.id}">
+                    <i class="fas fa-calendar-week"></i>
+                    عرض إجازات الشهر كامل
+                </button>
+            `;
+            
+            // Add event listener to monthly view button
+            const monthlyBtn = card.querySelector('.monthly-view-btn');
+            monthlyBtn.addEventListener('click', () => {
+                showMonthlyView(lineConfig, data.allData);
+            });
+            
+            return card;
+        }
+
+        function showMonthlyView(lineConfig, data) {
+            currentLineData = { lineConfig, data };
+            currentMonth = new Date().getMonth();
+            currentYear = new Date().getFullYear();
+            
+            // Update month display
+            updateMonthDisplay();
+            
+            // Process monthly data
+            const monthlyData = processMonthlyData(data, lineConfig, currentYear, currentMonth);
+            
+            // Store for filtering
+            allMonthlyData = monthlyData;
+            
+            // Update modal title
+            document.getElementById('modal-title').textContent = `إجازات ${lineConfig.name}`;
+            
+            // Show modal
+            document.getElementById('monthly-modal').classList.add('active');
+            
+            // Render table
+            renderMonthlyTable(monthlyData, lineConfig);
+        }
+
+        function updateMonthDisplay() {
+            const monthName = getArabicMonthName(currentMonth);
+            document.getElementById('current-month-display').textContent = `${monthName} ${currentYear}`;
+        }
+
+        function renderMonthlyTable(monthlyData, lineConfig, filter = 'all') {
+            const tableBody = document.getElementById('monthly-table-body');
+            const today = new Date();
+            
+            tableBody.innerHTML = '';
+            
+            monthlyData.forEach(dayData => {
+                // Apply filter
+                if (filter === 'available' && dayData.leaves.length === 0) return;
+                if (filter === 'empty' && dayData.leaves.length > 0) return;
+                
+                const row = document.createElement('tr');
+                
+                // Add special classes for today and tomorrow
+                if (dayData.isToday) {
+                    row.classList.add('today-row');
+                } else if (dayData.isTomorrow) {
+                    row.classList.add('tomorrow-row');
+                }
+                
+                // Date cell
+                const dateCell = document.createElement('td');
+                dateCell.className = 'date-cell';
+                dateCell.innerHTML = `
+                    ${dayData.dateStr}
+                    <span class="day-name">${dayData.arabicDay}</span>
+                `;
+                row.appendChild(dateCell);
+                
+                // Leave cells - show only 3 leaves
+                for (let i = 0; i < 3; i++) {
+                    const leaveCell = document.createElement('td');
+                    
+                    if (i < dayData.leaves.length) {
+                        const leaveName = document.createElement('div');
+                        leaveName.className = 'leave-name';
+                        leaveName.textContent = dayData.leaves[i];
+                        leaveCell.appendChild(leaveName);
+                    } else {
+                        leaveCell.innerHTML = '<span class="empty-cell">---</span>';
+                    }
+                    
+                    row.appendChild(leaveCell);
+                }
+                
+                tableBody.appendChild(row);
+            });
+            
+            // If no rows after filtering
+            if (tableBody.children.length === 0) {
+                const emptyRow = document.createElement('tr');
+                const emptyCell = document.createElement('td');
+                emptyCell.colSpan = 4;
+                emptyCell.style.textAlign = 'center';
+                emptyCell.style.padding = '40px';
+                emptyCell.innerHTML = `
+                    <i class="fas fa-calendar-times" style="font-size: 2rem; color: var(--gray); margin-bottom: 15px; display: block;"></i>
+                    <h3 style="color: var(--gray); font-size: 1.1rem;">لا توجد بيانات تطابق الفلتر المحدد</h3>
+                `;
+                emptyRow.appendChild(emptyCell);
+                tableBody.appendChild(emptyRow);
+            }
+        }
+
+        async function loadAllData() {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const dashboardGrid = document.getElementById('dashboard-grid');
+            
+            // Show loading
+            loadingOverlay.classList.add('active');
+            dashboardGrid.innerHTML = '';
+            
+            const tomorrow = getTomorrowDate();
+            
+            try {
+                // Fetch data for all sheets in parallel
+                const fetchPromises = SHEETS_CONFIG.map(async (lineConfig) => {
+                    const data = await fetchGoogleSheetData(lineConfig.sheetId, lineConfig.gid);
+                    return { lineConfig, data };
+                });
+                
+                const results = await Promise.allSettled(fetchPromises);
+                
+                // Process results
+                results.forEach((result, index) => {
+                    const lineConfig = SHEETS_CONFIG[index];
+                    
+                    if (result.status === 'fulfilled') {
+                        const { data } = result.value;
+                        if (data) {
+                            const processedData = processLineData(data, lineConfig, tomorrow);
+                            const card = createCard(lineConfig, processedData);
+                            dashboardGrid.appendChild(card);
+                        } else {
+                            createErrorCard(lineConfig);
+                        }
+                    } else {
+                        console.error(`Failed to load data for ${lineConfig.name}:`, result.reason);
+                        createErrorCard(lineConfig);
+                    }
+                });
+                
+                updateLastUpdateTime();
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                
+                // Show error message
+                dashboardGrid.innerHTML = `
+                    <div class="error-message" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--red); margin-bottom: 20px;"></i>
+                        <h2 style="color: var(--red); margin-bottom: 15px;">حدث خطأ في تحميل البيانات</h2>
+                        <p style="color: var(--dark-gray); margin-bottom: 20px;">${error.message}</p>
+                        <button onclick="loadAllData()" class="refresh-btn" style="margin: 0 auto;">
+                            <i class="fas fa-redo"></i>
+                            إعادة المحاولة
+                        </button>
+                    </div>
+                `;
+            } finally {
+                // Hide loading
+                setTimeout(() => {
+                    loadingOverlay.classList.remove('active');
+                }, 500);
+            }
+        }
+
+        function createErrorCard(lineConfig) {
+            const dashboardGrid = document.getElementById('dashboard-grid');
+            const tomorrow = getTomorrowDate();
+            const arabicDay = getArabicDayName(tomorrow);
+            
+            const card = document.createElement('div');
+            card.className = 'card gray';
+            card.dataset.lineId = lineConfig.id;
+            
+            card.innerHTML = `
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="${lineConfig.icon}"></i>
+                        <h2>${lineConfig.name}</h2>
+                    </div>
+                    <div class="date-info">
+                        <div class="date">${formatDate(tomorrow, 'YYYY/MM/DD')}</div>
+                        <div class="day">${arabicDay} - غدًا</div>
+                    </div>
+                </div>
+                
+                <div class="card-content">
+                    <div class="error-state">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem; color: var(--gray); margin-bottom: 15px; display: block;"></i>
+                        <h3 style="color: var(--gray); margin-bottom: 10px; font-size: 1.1rem;">تعذر تحميل البيانات</h3>
+                        <p style="color: var(--dark-gray); font-size: 0.9rem;">حدث خطأ في الاتصال بالملف</p>
+                    </div>
+                    
+                    <div class="status-info">
+                        <div class="status-text">
+                            <i class="fas fa-question-circle"></i>
+                            <span>لا توجد بيانات</span>
+                        </div>
+                        <div class="status-count" style="color: var(--gray);">--</div>
+                        <div class="status-details">
+                            <p>الحد الأقصى: <strong>${lineConfig.maxLeaves}</strong></p>
+                            <p>المستخدم: <strong>--</strong></p>
+                            <p>المتبقي: <strong>--</strong></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="monthly-view-btn" style="opacity: 0.5; cursor: not-allowed;" disabled>
+                    <i class="fas fa-calendar-week"></i>
+                    عرض إجازات الشهر كامل (غير متاح)
+                </button>
+            `;
+            
+            dashboardGrid.appendChild(card);
+        }
+
+        // Initialize the application
+        function initApp() {
+            // Set initial dates
+            updateDateTime();
+            
+            // Load data initially
+            loadAllData();
+            
+            // Set up refresh button
+            const refreshBtn = document.getElementById('refresh-btn');
+            refreshBtn.addEventListener('click', loadAllData);
+            
+            // Set up modal close button
+            const closeModalBtn = document.getElementById('close-modal');
+            const modalOverlay = document.getElementById('monthly-modal');
+            
+            closeModalBtn.addEventListener('click', () => {
+                modalOverlay.classList.remove('active');
+            });
+            
+            // Close modal when clicking outside
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    modalOverlay.classList.remove('active');
+                }
+            });
+            
+            // Set up filter buttons
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+                    
+                    // Apply filter
+                    if (currentLineData) {
+                        const monthlyData = processMonthlyData(
+                            currentLineData.data, 
+                            currentLineData.lineConfig, 
+                            currentYear, 
+                            currentMonth
+                        );
+                        allMonthlyData = monthlyData;
+                        renderMonthlyTable(monthlyData, currentLineData.lineConfig, btn.dataset.status);
+                    }
+                });
+            });
+            
+            // Set up month navigation
+            const prevMonthBtn = document.getElementById('prev-month');
+            const nextMonthBtn = document.getElementById('next-month');
+            
+            prevMonthBtn.addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                updateMonthData();
+            });
+            
+            nextMonthBtn.addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                updateMonthData();
+            });
+            
+            // Auto-refresh every 5 minutes
+            setInterval(loadAllData, 5 * 60 * 1000);
+            
+            // Update time every minute
+            setInterval(updateDateTime, 60 * 1000);
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                    modalOverlay.classList.remove('active');
+                }
+            });
+            
+            // Prevent body scroll when modal is open
+            modalOverlay.addEventListener('transitionend', () => {
+                if (modalOverlay.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            });
+        }
+
+        function updateMonthData() {
+            if (currentLineData) {
+                updateMonthDisplay();
+                const monthlyData = processMonthlyData(
+                    currentLineData.data, 
+                    currentLineData.lineConfig, 
+                    currentYear, 
+                    currentMonth
+                );
+                allMonthlyData = monthlyData;
+                
+                // Get current filter
+                const activeFilter = document.querySelector('.filter-btn.active');
+                const filter = activeFilter ? activeFilter.dataset.status : 'all';
+                
+                renderMonthlyTable(monthlyData, currentLineData.lineConfig, filter);
+            }
+        }
+
+        // Start the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>

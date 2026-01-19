@@ -1164,7 +1164,7 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <p>© 2026 نظام عرض إجازات عمال الإنتاج - يجب التنسيق مع المشرف قبل طلب الإجازة بوقت كاف - اي تغيير في موعد الاجازة يجب ابلاغ المشرف فورا - لكل شخص الحق في اخذ اجازة يومين فقط في الشهر - الغياب بدون إذن مسبق يؤدي لخصم ٢٠% من الحوافز الشهرية لكل يوم- لا يسمح بالتعديل</p>
+            <p>© 2026 نظام عرض إجازات عمال انتاج البلاستيك- يجب التنسيق مع المشرف قبل طلب الإجازة بوقت كاف - اي تغيير في موعد الاجازة يجب ابلاغ المشرف فورا - لكل شخص الحق في اخذ اجازة يومين فقط في الشهر - الغياب بدون إذن مسبق يؤدي لخصم ٢٠% من الحوافز الشهرية لكل يوم- لا يسمح بالتعديل</p>
             <p class="note">جميع التحديثات تتم من خلال ملفات Google Sheets فقط</p>
         </footer>
     </div>
@@ -1459,8 +1459,8 @@
                 };
                 
                 if (row) {
-                    // Extract worker names from leave columns only (max 3 leaves)
-                    for (let i = 1; i <= 3; i++) {
+                    // Extract worker names from leave columns only (max 5 leaves)
+                    for (let i = 1; i <= 5; i++) {
                         const leaveKey = `اجازة ${i}`;
                         if (row[leaveKey] && row[leaveKey].trim() !== '') {
                             dayData.leaves.push(row[leaveKey].trim());
@@ -1669,8 +1669,8 @@
                 `;
                 row.appendChild(dateCell);
                 
-                // Leave cells - show only 3 leaves
-                for (let i = 0; i < 3; i++) {
+                // Leave cells - show only 5 leaves
+                for (let i = 0; i < 5; i++) {
                     const leaveCell = document.createElement('td');
                     
                     if (i < dayData.leaves.length) {
